@@ -1,2 +1,2 @@
 # GSL
-Generalized Screw Library
+Generalized Screw Calculus Library
