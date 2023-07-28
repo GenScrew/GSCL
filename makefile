@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-I.
 LDFLAGS=
 
-EXEC=GSL
+EXEC=GSCL
 SRC=src/main.cpp src/geometric_algebra.cpp src/screw.cpp 
 OBJ=$(SRC:%.cpp=build/%.o)
 
