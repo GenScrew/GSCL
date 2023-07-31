@@ -5,6 +5,7 @@
 #ifndef _GEOMETRIC_ALGEBRA_H
 #define _GEOMETRIC_ALGEBRA_H
 
+#include <cstring>
 #include <vector>
 using namespace std;
 
@@ -45,6 +46,8 @@ class GeometricAlgebra
 		// The number of basis blades of the algebra.
 		int nb_blades;
 
+		vector<string> names;
+
 		// The basis blades index for geometric product calculation.
 		vector<int> blades;
 
@@ -56,7 +59,7 @@ class GeometricAlgebra
 
 
 		// Contructor method.
-		GeometricAlgebra(const int dim);
+		GeometricAlgebra(const int dim, const vector<string> blades_names);
 
 		/* get_gp_basis: computes the geometric product
 
@@ -77,9 +80,6 @@ class GeometricAlgebra
 		  k-blades where ``k`` is the grade you want. */
 		void get_grade(const int grade_index, unsigned int &first_index, unsigned int &last_index);
 
-		// Display the instance.
-		void show(void);
-
 		// Returns the `index` basis blade of the algebra.
 		MultiVector operator[](const int index);
 };
@@ -97,9 +97,6 @@ class MultiVector
 		// Constructor Method.
 		MultiVector(GeometricAlgebra* geo_alg, vector<MV_TYPE> component);
 		MultiVector(void){};
-
-		// Display the instance.
-		void show(void);
 
 		MV_TYPE operator[](const unsigned int index);
 
@@ -131,6 +128,8 @@ class MultiVector
 		   even grades. */
 		bool is_spinor(void);
 };
+
+ostream& operator<<(ostream& stream, MultiVector mv);
 
 // Tests the equality between two multivectors.
 bool operator==(MultiVector mv, MultiVector other);
@@ -166,7 +165,6 @@ MultiVector operator|(MultiVector mv, MultiVector other);
 MultiVector operator/(MultiVector mv, MV_TYPE other);
 MultiVector operator/(MV_TYPE other, MultiVector mv);
 MultiVector operator/(MultiVector mv, MultiVector other);
-
 
 
 // Computes the binomial coefficien nCk.

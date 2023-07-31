@@ -20,10 +20,22 @@ bool BladeId::operator<(const BladeId other)
 }
 
 
-GeometricAlgebra::GeometricAlgebra(const int n)
+GeometricAlgebra::GeometricAlgebra(const int n, const vector<string> blades_names)
 {
 	dim = n;
 	nb_blades = pow(2, n);
+
+	try{
+		if (blades_names.size() != nb_blades)
+			throw 1;
+	}
+	catch (const int err)
+	{
+		if (err == 1)
+			cout << "GeometricAlgebraErr: the given names don't match" << endl;
+	}
+
+	names = blades_names;
 
 	vector<BladeId> tmp_blades;
 	for (int i = 0; i < nb_blades; i ++)
@@ -76,12 +88,6 @@ void GeometricAlgebra::get_grade(const int grade_index, unsigned int &first_inde
 }
 
 
-void GeometricAlgebra::show(void)
-{
-	cout << "GeometricAlgebra(dim=" << GeometricAlgebra::dim << ")" << endl;
-}
-
-
 MultiVector GeometricAlgebra::operator[](const int index)
 {
 	return GeometricAlgebra::basis[index];
@@ -92,15 +98,6 @@ MultiVector::MultiVector(GeometricAlgebra* geo_alg, vector<MV_TYPE> component)
 {
 	ga = geo_alg;
 	value = component;
-}
-
-
-void MultiVector::show(void)
-{
-	cout << "MultiVector({ ";
-	for (MV_TYPE i: MultiVector::value)
-		cout << i << " ";
-	cout << "})" << endl;
 }
 
 
@@ -173,6 +170,33 @@ bool MultiVector::is_spinor(void)
 		new_mv = new_mv + this->projection(i);
 
 	return (new_mv == *this);
+}
+
+
+ostream& operator<<(ostream& stream, MultiVector mv)
+{
+	vector<MV_TYPE> null_test(mv.ga->nb_blades, 0);
+	if (mv.value == null_test)
+		stream << "0";
+	else
+	{
+		int index = 0;
+		for (int i = 0; i < mv.ga->nb_blades; i ++)
+		{
+			if (mv.value[i])
+			{
+				if (index == 0 && mv.value[i] < 0)
+					stream << "-";
+				if (index != 0)
+					stream << (mv.value[i] < 0 ? " - " : " + ");
+
+				stream << abs(mv.value[i]) << "*" << mv.ga->names[i];
+				index ++;
+			}
+		}
+	}
+
+	return stream;
 }
 
 
