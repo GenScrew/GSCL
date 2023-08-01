@@ -18,50 +18,9 @@ int main()
 	MultiVector e23 = ga[6];
 	MultiVector e123 = ga[7];
 
-	cout << (e1 * e12) << endl;
+	Screw scw(e1, e1, 0*s);
+	CoScrew coscw(e1, e2, 0*s);
+	cout << comoment(coscw, scw) << endl;
+	
 	return 0;
 }
-
-
-
-
-/* TESTS */
-/*
-
-Générer l'ensemble des partitions
----------------------------------
-vector<int> input = {1, 2, 3};
-vector< vector<int> > multivector;
- 
-for(int a: input)
-{
-	vector<int> tmp;
-	tmp.push_back(a);
-
-	for(int b: input)
-	{
-		multivector.push_back(tmp);
-		tmp.push_back(b);
-	}
-	multivector.push_back(tmp);
-	
-}
-
-Afficher un vector à n-dimensionnel
------------------------------------
-template <class T>
-ostream& operator<<(ostream& o, const vector<T>& vec)
-{
-    o << '[';
-    for (size_t i = 0; i < vec.size(); ++i)
-        o << (i != 0 ? " " : "") << vec[i];
-    o << ']';
-    return o;
-}
-
-template <typename T>
-void print(const T& val)
-{
-    cout << val;
-}
-*/

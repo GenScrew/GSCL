@@ -138,7 +138,7 @@ void CoScrew::show(MultiVector new_point)
 }
 
 
-void CoScrew::composition(CoScrew other)
+CoScrew CoScrew::composition(CoScrew other)
 {
 	try
 	{
@@ -190,4 +190,10 @@ CoScrew operator*(MV_TYPE other, CoScrew scw)
 			other * scw.direction,
 			other * scw.moment
 		);
+}
+
+
+MV_TYPE comoment(CoScrew coscw, Screw scw)
+{
+	return ((-coscw.direction.grade_involution() * scw.moment.grade_involution())[0] + (scw.direction * coscw.moment)[0]);
 }

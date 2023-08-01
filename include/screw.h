@@ -40,6 +40,8 @@ CoScrew operator+(CoScrew scw, CoScrew other);
 CoScrew operator*(MV_TYPE other, CoScrew scw);
 
 
+MV_TYPE comoment(CoScrew coscw, Screw scw);
+
 
 
 
