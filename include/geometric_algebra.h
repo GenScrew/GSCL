@@ -1,4 +1,4 @@
-/* CScrew: geometric_algebra
+/* GSCL: geometric_algebra
 
    This module provided a GeometricAlgebra ans a MultiVector classes.
 */
@@ -10,6 +10,7 @@
 using namespace std;
 
 #define MV_TYPE float
+
 
 /* BladeId
 
